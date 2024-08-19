@@ -6,6 +6,7 @@ import { verify } from "hono/jwt";
 export const blogRouter = new Hono<{
   Bindings: {
     DATABASE_URL: string;
+    JWT_SECRET: string;
   };
   Variables: {
     userId: string;
@@ -17,7 +18,7 @@ blogRouter.use("/*", async (c, next) => {
   if (!header) {
     return c.json({ message: "Unauthorized!" });
   }
-  const response = await verify(header, "secret");
+  const response = await verify(header, c.env.JWT_SECRET);
   console.log(response);
   if (response.id) {
     //@ts-ignore
