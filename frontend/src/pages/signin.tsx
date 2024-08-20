@@ -1,5 +1,11 @@
-export const SignIn =() =>{
-    return(
-        <div className='bg-cyan-400 text-4xl font-bold'>SignIn</div>
-    )
-}
+import { Auth } from "../components/Auth";
+import { Quotes } from "../components/Quotes";
+
+export const SignIn = () => {
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2">
+      <Auth type="signin" />
+      <Quotes />
+    </div>
+  );
+};
