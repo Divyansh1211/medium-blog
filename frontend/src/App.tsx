@@ -25,7 +25,12 @@ function App() {
           />
           <Route path="/blogs/:id" element={<BlogWithId />} />
           <Route path="/blogs" element={<Blog />} />
-          <Route path="/" element={<SignUp />} />
+          <Route
+            path="/"
+            element={
+              localStorage.getItem("jwt") === null ? <SignUp /> : <Blog />
+            }
+          />
           <Route path="/publish" element={<Publish />} />
         </Routes>
       </BrowserRouter>
