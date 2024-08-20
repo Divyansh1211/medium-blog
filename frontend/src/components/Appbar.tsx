@@ -3,7 +3,6 @@ import { Avatar } from "./BlogCard";
 
 export const Appbar = () => {
   const location = useLocation();
-  console.log(location.pathname);
   return (
     <div className="border-b flex justify-between px-10 text-2xl py-4 font-bold">
       <Link to="/blogs">

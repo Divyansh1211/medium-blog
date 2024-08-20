@@ -11,8 +11,18 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SignIn />} />
+          <Route
+            path="/signup"
+            element={
+              localStorage.getItem("jwt") === null ? <SignUp /> : <Blog />
+            }
+          />
+          <Route
+            path="/signin"
+            element={
+              localStorage.getItem("jwt") === null ? <SignIn /> : <Blog />
+            }
+          />
           <Route path="/blogs/:id" element={<BlogWithId />} />
           <Route path="/blogs" element={<Blog />} />
           <Route path="/" element={<SignIn />} />

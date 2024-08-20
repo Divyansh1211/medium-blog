@@ -12,16 +12,32 @@ export const Auth = ({ type }: { type: "Signup" | "signin" }) => {
   });
 
   const sendRequest = async () => {
-    const response = await axios.post(
-      `https://backend.divyanshmanchanda1211.workers.dev/api/v1/user${
-        type === "Signup" ? "/signup" : "/signin"
-      }`,
-      postInputs
-    );
-    const jwt = response.data;
-    console.log(jwt);
-    localStorage.setItem("jwt", jwt);
-    navigate("/blogs");
+    try {
+      if (type === "Signup" && postInputs.name === "") {
+        alert("Name is required");
+        return;
+      }
+      if (postInputs.email === "") {
+        alert("Email is required");
+        return;
+      }
+      if (postInputs.password === "") {
+        alert("Password is required");
+        return;
+      }
+      const response = await axios.post(
+        `https://backend.divyanshmanchanda1211.workers.dev/api/v1/user${
+          type === "Signup" ? "/signup" : "/signin"
+        }`,
+        postInputs
+      );
+      const jwt = response.data;
+      console.log(jwt);
+      localStorage.setItem("jwt", jwt);
+      navigate("/blogs");
+    } catch (error) {
+      alert("Invalid credentials");
+    }
   };
   return (
     <div className="h-screen flex justify-center flex-col ">

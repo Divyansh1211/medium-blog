@@ -62,5 +62,5 @@ userRouter.post("/signin", async (c) => {
     c.env.JWT_SECRET
   );
 
-  return c.json({ message: token });
+  return c.text(token);
 });
