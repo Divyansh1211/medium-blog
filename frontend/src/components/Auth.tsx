@@ -21,8 +21,8 @@ export const Auth = ({ type }: { type: "Signup" | "signin" }) => {
         alert("Email is required");
         return;
       }
-      if (postInputs.password === "") {
-        alert("Password is required");
+      if (postInputs.password === "" && postInputs.password.length < 8) {
+        alert("Password should be atleast 8 characters long");
         return;
       }
       const response = await axios.post(

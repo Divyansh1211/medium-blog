@@ -17,7 +17,7 @@ function App() {
     } else {
       setIsAuthenticated(false);
     }
-  }, []);
+  }, [localStorage.getItem("jwt")]);
   return (
     <>
       <Routes>
