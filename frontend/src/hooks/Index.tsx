@@ -18,15 +18,11 @@ export const useBlogs = () => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get(
-        `${TEST_URL}/blog/bulk`,
-
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("jwt")}`,
-          },
-        }
-      );
+      const response = await axios.get(`${BASE_URL}/blog/bulk`, {
+        headers: {
+          Authorization: `${localStorage.getItem("jwt")}`,
+        },
+      });
       setBlogs(response.data.message);
       setLoading(false);
     } catch (error) {
@@ -63,7 +59,7 @@ export const useBlog = (id: string | undefined) => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get(`${TEST_URL}/blog/${id}`, {
+      const response = await axios.get(`${BASE_URL}/blog/${id}`, {
         headers: {
           Authorization: `${localStorage.getItem("jwt")}`,
         },

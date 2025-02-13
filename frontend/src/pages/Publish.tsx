@@ -15,7 +15,7 @@ export const Publish = () => {
     console.log(title, content);
     try {
       const response = await axios.post(
-        `${TEST_URL}/blog/`,
+        `${BASE_URL}/blog/`,
         {
           title,
           content,

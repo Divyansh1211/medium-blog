@@ -30,7 +30,7 @@ export const Auth = ({ type }: { type: "Signup" | "signin" }) => {
         return;
       }
       const response = await axios.post(
-        `${TEST_URL}/user${type === "Signup" ? "/signup" : "/signin"}`,
+        `${BASE_URL}/user${type === "Signup" ? "/signup" : "/signin"}`,
         postInputs
       );
       if (response.data.message === "User created!") {
