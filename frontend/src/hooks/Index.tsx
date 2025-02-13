@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+const BASE_URL = "https://backend.divyanshmanchanda1211.workers.dev/api/v1";
+const TEST_URL = "http://localhost:8787/api/v1";
+
 export const useBlogs = () => {
   type BlogType = {
     id: string;
@@ -16,7 +19,8 @@ export const useBlogs = () => {
   const fetchBlogs = async () => {
     try {
       const response = await axios.get(
-        "https://backend.divyanshmanchanda1211.workers.dev/api/v1/blog/bulk",
+        `${TEST_URL}/blog/bulk`,
+
         {
           headers: {
             Authorization: `${localStorage.getItem("jwt")}`,
@@ -32,7 +36,7 @@ export const useBlogs = () => {
 
   useEffect(() => {
     fetchBlogs();
-  });
+  }, []);
 
   return { blogs, loading };
 };
@@ -59,14 +63,11 @@ export const useBlog = (id: string | undefined) => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get(
-        `https://backend.divyanshmanchanda1211.workers.dev/api/v1/blog/${id}`,
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("jwt")}`,
-          },
-        }
-      );
+      const response = await axios.get(`${TEST_URL}/blog/${id}`, {
+        headers: {
+          Authorization: `${localStorage.getItem("jwt")}`,
+        },
+      });
       console.log(response.data);
       setBlog(response.data);
       setLoading(false);

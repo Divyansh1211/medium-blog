@@ -3,6 +3,9 @@ import { Appbar } from "../components/Appbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const BASE_URL = "https://backend.divyanshmanchanda1211.workers.dev/api/v1";
+const TEST_URL = "http://localhost:8787/api/v1";
+
 export const Publish = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -12,7 +15,7 @@ export const Publish = () => {
     console.log(title, content);
     try {
       const response = await axios.post(
-        `https://backend.divyanshmanchanda1211.workers.dev/api/v1/blog/`,
+        `${TEST_URL}/blog/`,
         {
           title,
           content,

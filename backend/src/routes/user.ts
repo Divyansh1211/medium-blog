@@ -19,7 +19,7 @@ userRouter.post("/signup", async (c) => {
   const body = await c.req.json();
   const input = signUpInput.safeParse(body);
   if (input.success) {
-    const user = await prisma.user.create({
+    await prisma.user.create({
       data: {
         email: body.email,
         password: body.password,
@@ -27,13 +27,13 @@ userRouter.post("/signup", async (c) => {
       },
     });
 
-    const token = await sign(
-      {
-        id: user.id,
-      },
-      c.env.JWT_SECRET
-    );
-    return c.text(token);
+    // const token = await sign(
+    //   {
+    //     id: user.id,
+    //   },
+    //   c.env.JWT_SECRET
+    // );
+    return c.json({ message: "User created!" });
   } else {
     return c.json({ message: "Invalid input!" });
   }
@@ -53,14 +53,13 @@ userRouter.post("/signin", async (c) => {
       email: body.email,
     },
   });
-
   if (!user) {
     return c.json({ message: "User not found!" });
   }
-  const token = await sign(
-    { email: user.email, password: user.password, id: user.id },
-    c.env.JWT_SECRET
-  );
-
-  return c.text(token);
+  if (user.password !== body.password) {
+    return c.json({ message: "Invalid credentials!" });
+  } else {
+    const token = await sign({ id: user.id }, c.env.JWT_SECRET);
+    return c.json({ message: token });
+  }
 });

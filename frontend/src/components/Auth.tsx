@@ -3,6 +3,9 @@ import { useState } from "react";
 import { SignUpInputType } from "@divyanshtechno/medium-common";
 import axios from "axios";
 
+const BASE_URL = "https://backend.divyanshmanchanda1211.workers.dev/api/v1";
+const TEST_URL = "http://localhost:8787/api/v1";
+
 export const Auth = ({ type }: { type: "Signup" | "signin" }) => {
   const navigate = useNavigate();
   const [postInputs, setPostInputs] = useState<SignUpInputType>({
@@ -13,6 +16,7 @@ export const Auth = ({ type }: { type: "Signup" | "signin" }) => {
 
   const sendRequest = async () => {
     try {
+      console.log(postInputs.password.length < 8);
       if (type === "Signup" && postInputs.name === "") {
         alert("Name is required");
         return;
@@ -21,20 +25,35 @@ export const Auth = ({ type }: { type: "Signup" | "signin" }) => {
         alert("Email is required");
         return;
       }
-      if (postInputs.password === "" && postInputs.password.length < 8) {
+      if (postInputs.password === "" || postInputs.password.length < 8) {
         alert("Password should be atleast 8 characters long");
         return;
       }
       const response = await axios.post(
-        `https://backend.divyanshmanchanda1211.workers.dev/api/v1/user${
-          type === "Signup" ? "/signup" : "/signin"
-        }`,
+        `${TEST_URL}/user${type === "Signup" ? "/signup" : "/signin"}`,
         postInputs
       );
-      const jwt = response.data;
-      console.log(jwt);
-      localStorage.setItem("jwt", jwt);
-      navigate("/blogs");
+      if (response.data.message === "User created!") {
+        navigate("/signin");
+      } else if (response.data.message === "Invalid input!") {
+        alert("Invalid input");
+        return;
+      } else if (response.data.message === "User not found!") {
+        alert("User not found");
+        return;
+      } else if (response.data.message === "Invalid credentials!") {
+        alert("Invalid credentials");
+        return;
+      } else {
+        const jwt = response.data.message;
+        localStorage.setItem("jwt", jwt);
+        navigate("/blogs");
+      }
+      console.log(response.data.message);
+      // const jwt = response.data;
+      // console.log(jwt);
+      // localStorage.setItem("jwt", jwt);
+      // navigate("/blogs");
     } catch (error) {
       alert("Invalid credentials");
     }
