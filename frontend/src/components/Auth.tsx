@@ -4,7 +4,6 @@ import { SignUpInputType } from "@divyanshtechno/medium-common";
 import axios from "axios";
 
 const BASE_URL = "https://backend.divyanshmanchanda1211.workers.dev/api/v1";
-const TEST_URL = "http://localhost:8787/api/v1";
 
 export const Auth = ({ type }: { type: "Signup" | "signin" }) => {
   const navigate = useNavigate();

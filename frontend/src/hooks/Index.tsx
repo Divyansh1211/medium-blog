@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const BASE_URL = "https://backend.divyanshmanchanda1211.workers.dev/api/v1";
-const TEST_URL = "http://localhost:8787/api/v1";
 
 export const useBlogs = () => {
   type BlogType = {
